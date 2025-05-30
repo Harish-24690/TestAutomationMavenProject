@@ -20,7 +20,7 @@ public class ExcelUtil {
 
 			FileInputStream fis = new FileInputStream(System.getProperty("user.dir") + "\\TestData\\" + fileName);
 			XSSFWorkbook wb = new XSSFWorkbook(fis);
-            XSSFSheet sh = wb.getSheet(sheetName);
+			XSSFSheet sh = wb.getSheet(sheetName);
 // Get the total rows & columns having data
 			int totalRows = sh.getPhysicalNumberOfRows();
 			int totalColumns = sh.getRow(0).getPhysicalNumberOfCells();
@@ -28,7 +28,7 @@ public class ExcelUtil {
 			// then store them in List
 // Loop to iterate over rows
 			for (int r = 1; r < totalRows; r++) {
-Map<String, String> rowData = new HashMap<String, String>();
+				Map<String, String> rowData = new HashMap<String, String>();
 // Loop to iterate over columns
 				for (int c = 0; c < totalColumns; c++) {
 					String columnName = sh.getRow(0).getCell(c).getStringCellValue();
@@ -47,7 +47,35 @@ Map<String, String> rowData = new HashMap<String, String>();
 		}
 
 		return data;
+		
+		
 	}
-
+	
+	public static String[][] readData1(String fileName,String sheetName) {
+		String[][] data = null;
+		try {
+			FileInputStream fis = new FileInputStream(System.getProperty("user.dir")+"\\TestData\\" + fileName);
+			
+			XSSFWorkbook wb = new XSSFWorkbook(fis);
+			XSSFSheet sh=wb.getSheet(sheetName);
+			int totalRows = sh.getPhysicalNumberOfRows();
+			int totalColumns =sh.getRow(0).getPhysicalNumberOfCells();
+			
+			data= new String[totalRows][totalColumns];
+			for(int r=0;r<totalRows;r++) {
+				for(int c=0;c<totalColumns;c++) {
+			         data[r][c]= sh.getRow(r).getCell(c).getStringCellValue();		
+				}
+			}
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return data;
+	} 
 
 }
